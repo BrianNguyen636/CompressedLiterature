@@ -7,32 +7,47 @@ public class CodingTree {
     Map<Character, Integer> freqMap;
 
     void CodingTree(String message) {
-        char[] text = message.toCharArray();
-        for (char c : text) {
-            if (!freqMap.containsKey(c)) {
-                freqMap.put(c,1);
-            } else {
-                freqMap.put(c, freqMap.get(c) + 1);
-            }
-        }
 
-        queue = new PriorityQueue<>(1, new AscendingComparator());
-        for (Character c : freqMap.keySet()) {
-            queue.add(new Node(c,freqMap.get(c)));
-        }
+        freqMap = countFreq(message);
 
-        while (queue.size() != 1) {
-            Node left = queue.poll();
-            Node right = queue.poll();
+        queue = populateQueue(freqMap);
+
+        mergeTrees(queue);
+
+    }
+
+    private void mergeTrees(PriorityQueue<Node> theQueue) {
+        while (theQueue.size() != 1) {
+            Node left = theQueue.poll();
+            Node right = theQueue.poll();
             Node root = new Node(left.weight + right.weight);
             root.left = left;
             root.right = right;
-            queue.add(root);
+            theQueue.add(root);
         }
-
-
-
     }
+
+    public PriorityQueue<Node> populateQueue(Map<Character, Integer> freq) {
+        PriorityQueue<Node> result = new PriorityQueue<>(1, new AscendingComparator());
+        for (Character c : freq.keySet()) {
+            result.add(new Node(c,freq.get(c)));
+        }
+        return result;
+    }
+
+    public Map<Character, Integer> countFreq(String message) {
+        char[] text = message.toCharArray();
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : text) {
+            if (!map.containsKey(c)) {
+                map.put(c,1);
+            } else {
+                map.put(c, map.get(c) + 1);
+            }
+        }
+        return map;
+    }
+
     class AscendingComparator implements Comparator<Node>  {
         @Override
         public int compare(Node o1, Node o2) {
