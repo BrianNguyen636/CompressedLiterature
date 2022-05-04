@@ -16,7 +16,7 @@ public class CodingTree {
 
     }
 
-    private void mergeTrees(PriorityQueue<Node> theQueue) {
+    public void mergeTrees(PriorityQueue<Node> theQueue) {
         while (theQueue.size() != 1) {
             Node left = theQueue.poll();
             Node right = theQueue.poll();
