@@ -16,7 +16,7 @@ public class CodingTree {
 
     }
 
-    public void mergeTrees(PriorityQueue<Node> theQueue) {
+    private void mergeTrees(PriorityQueue<Node> theQueue) {
         while (theQueue.size() != 1) {
             Node left = theQueue.poll();
             Node right = theQueue.poll();
@@ -27,7 +27,7 @@ public class CodingTree {
         }
     }
 
-    public PriorityQueue<Node> populateQueue(Map<Character, Integer> freq) {
+    private PriorityQueue<Node> populateQueue(Map<Character, Integer> freq) {
         PriorityQueue<Node> result = new PriorityQueue<>(freq.size(), new AscendingComparator());
         for (Character c : freq.keySet()) {
             result.add(new Node(c,freq.get(c)));
@@ -35,7 +35,7 @@ public class CodingTree {
         return result;
     }
 
-    public Map<Character, Integer> countFreq(String message) {
+    private Map<Character, Integer> countFreq(String message) {
         char[] text = message.toCharArray();
         Map<Character, Integer> map = new HashMap<>();
         for (char c : text) {
