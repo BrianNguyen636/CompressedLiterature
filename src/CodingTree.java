@@ -21,6 +21,15 @@ public class CodingTree {
             queue.add(new Node(c,freqMap.get(c)));
         }
 
+        while (queue.size() != 1) {
+            Node left = queue.poll();
+            Node right = queue.poll();
+            Node root = new Node(left.weight + right.weight);
+            root.left = left;
+            root.right = right;
+            queue.add(root);
+        }
+
 
 
     }
@@ -33,12 +42,15 @@ public class CodingTree {
 
     class Node {
         char character;
-        int weight;
+        int weight = 0;
         Node left = null;
         Node right = null;
 
         Node(char theCharacter, int theWeight) {
             character = theCharacter;
+            weight = theWeight;
+        }
+        Node(int theWeight) {
             weight = theWeight;
         }
     }
