@@ -5,6 +5,6 @@ public class Main {
         testCodingTree();
     }
     public static void testCodingTree() {
-        CodingTree test = new CodingTree("I drift tonight");
+        CodingTree test = new CodingTree("drift tonight");
     }
 }
