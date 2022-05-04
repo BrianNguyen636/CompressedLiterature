@@ -14,6 +14,18 @@ public class CodingTree {
 
         mergeTrees(queue);
 
+
+
+    }
+
+    private void mapCodes(Map<Character,String> map, Node tree) {
+        mapCodes(map, tree, "");
+    }
+    /*
+    Recursive function, if left and right are null, then map code to character.
+     */
+    private void mapCodes(Map<Character,String> map, Node current, String code) {
+
     }
 
     private void mergeTrees(PriorityQueue<Node> theQueue) {
