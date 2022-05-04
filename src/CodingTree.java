@@ -6,7 +6,7 @@ public class CodingTree {
     PriorityQueue<Node> queue;
     Map<Character, Integer> freqMap;
 
-    void CodingTree(String message) {
+    public CodingTree(String message) {
 
         freqMap = countFreq(message);
 
@@ -51,17 +51,17 @@ public class CodingTree {
     class AscendingComparator implements Comparator<Node>  {
         @Override
         public int compare(Node o1, Node o2) {
-            return o2.weight - o1.weight;
+            return o1.weight - o2.weight;
         }
     }
 
     class Node {
-        char character;
+        Character character;
         int weight = 0;
         Node left = null;
         Node right = null;
 
-        Node(char theCharacter, int theWeight) {
+        Node(Character theCharacter, int theWeight) {
             character = theCharacter;
             weight = theWeight;
         }
