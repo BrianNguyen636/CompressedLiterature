@@ -28,7 +28,7 @@ public class CodingTree {
     }
 
     public PriorityQueue<Node> populateQueue(Map<Character, Integer> freq) {
-        PriorityQueue<Node> result = new PriorityQueue<>(1, new AscendingComparator());
+        PriorityQueue<Node> result = new PriorityQueue<>(freq.size(), new AscendingComparator());
         for (Character c : freq.keySet()) {
             result.add(new Node(c,freq.get(c)));
         }
