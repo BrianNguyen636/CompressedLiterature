@@ -9,6 +9,7 @@ public class Main {
         long start = System.currentTimeMillis();
         File file = new File("WarAndPeace.txt");
         String text = "";
+        long filesize = 0;
         try {
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()) {
@@ -20,6 +21,7 @@ public class Main {
 
             writer.write(tree.bits);
             writer.close();
+            filesize = compressed.length() / 1024;
 
 
         } catch (FileNotFoundException e) {
@@ -28,7 +30,8 @@ public class Main {
             e.printStackTrace();
         }
         long end = System.currentTimeMillis();
-        System.out.println("Runtime: " + (end - start) + " milliseconds.");
+        System.out.println("Runtime: " + (end - start) / 1000 + " seconds.");
+        System.out.println("Compressed file size: " + filesize + " kibibytes.");
 
     }
     public static void testCodingTree() {

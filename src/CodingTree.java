@@ -22,13 +22,21 @@ public class CodingTree {
         mapCodes(codes, queue.peek());
 
         BitSet bitset = new BitSet(text.length);
-        String codeString = "";
+        int i = 0;
         for (Character c : text) {
-            codeString += codes.get(c);
+            String codeString = codes.get(c);
+            for (int j = 0; j < codeString.length(); j++) {
+                bitset.set(i + j, codeString.charAt(j) != '0');
+            }
+            i += codeString.length();
         }
-        for (int i = 0; i < codeString.length(); i++) {
-            bitset.set(i, codeString.charAt(i) != '0');
-        }
+//        String codeString = "";
+//        for (Character c : text) {
+//            codeString += codes.get(c);
+//        }
+//        for (int i = 0; i < codeString.length(); i++) {
+//            bitset.set(i, codeString.charAt(i) != '0');
+//        }
         bits = bitset.toByteArray();
     }
 
