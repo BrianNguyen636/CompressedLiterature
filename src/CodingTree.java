@@ -1,21 +1,35 @@
 import java.util.*;
 
 public class CodingTree {
-    Map<Character, String> codes;
-    String bits;
+    Map<Character, String> codes = new HashMap<>();
+    byte[] bits;
     PriorityQueue<Node> queue;
     Map<Character, Integer> freqMap;
 
     public CodingTree(String message) {
-
-        freqMap = countFreq(message);
-
+        char[] text = message.toCharArray();
+        freqMap = new HashMap<>();
+        for (char c : text) {
+            if (!freqMap.containsKey(c)) {
+                freqMap.put(c,1);
+            } else {
+                freqMap.put(c, freqMap.get(c) + 1);
+            }
+        }
         queue = populateQueue(freqMap);
-
         mergeTrees(queue);
 
+        mapCodes(codes, queue.peek());
 
-
+        BitSet bitset = new BitSet(text.length);
+        String codeString = "";
+        for (Character c : text) {
+            codeString += codes.get(c);
+        }
+        for (int i = 0; i < codeString.length(); i++) {
+            bitset.set(i, codeString.charAt(i) != '0');
+        }
+        bits = bitset.toByteArray();
     }
 
     private void mapCodes(Map<Character,String> map, Node tree) {
@@ -25,7 +39,16 @@ public class CodingTree {
     Recursive function, if left and right are null, then map code to character.
      */
     private void mapCodes(Map<Character,String> map, Node current, String code) {
-
+        if (current.left == null && current.right == null) {
+            map.put(current.character, code);
+        } else {
+            if (current.left != null) {
+                mapCodes(map, current.left, code + "0");
+            }
+            if (current.right != null) {
+                mapCodes(map, current.right, code + "1");
+            }
+        }
     }
 
     private void mergeTrees(PriorityQueue<Node> theQueue) {
@@ -45,19 +68,6 @@ public class CodingTree {
             result.add(new Node(c,freq.get(c)));
         }
         return result;
-    }
-
-    private Map<Character, Integer> countFreq(String message) {
-        char[] text = message.toCharArray();
-        Map<Character, Integer> map = new HashMap<>();
-        for (char c : text) {
-            if (!map.containsKey(c)) {
-                map.put(c,1);
-            } else {
-                map.put(c, map.get(c) + 1);
-            }
-        }
-        return map;
     }
 
     class AscendingComparator implements Comparator<Node>  {
