@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
 //        testCodingTree();
         long start = System.currentTimeMillis();
-//        File file = new File("WarAndPeace.txt");
         File file = new File(args[0]);
 
         long filesize = 0;

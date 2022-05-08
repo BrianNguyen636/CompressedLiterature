@@ -20,23 +20,6 @@ public class CodingTree {
 
         System.out.println("Encoding");
 
-//        StringBuilder codeString = new StringBuilder();
-//        for (int i = 0; i < message.length(); i++) {
-//            codeString.append(codes.get(message.charAt(i)));
-//            if (codeString.length() >= 8) {
-//                String byteString = codeString.substring(0,8);
-//                byte b = (byte) Integer.parseInt(byteString,2);
-//                bits.add(b);
-//                codeString.delete(0,8);
-//            }
-//        }
-//        while (codeString.length() != 8) {
-//            codeString.append('0');
-//            byte b = (byte) Integer.parseInt(codeString.toString(),2);
-//            bits.add(b);
-//        }
-
-
         BitSet bitset = new BitSet();
         int x = 0;
         for (int i = 0; i < message.length(); i++) {
@@ -54,23 +37,6 @@ public class CodingTree {
             bits.add(b);
         }
     }
-
-
-//    String decode(String bits, Map<Character, String> codes) {
-//        String result = "";
-//        Node root = new Node(0);
-//        for (Character c: codes.keySet()) {
-//            String codeString = codes.get(c);
-//            for (int i = 0; i < codeString.length(); i++) {
-//                if (codeString.charAt(i) == '0') {
-//
-//                } else {
-//
-//                }
-//            }
-//        }
-//        return result;
-//    }
 
     private void mapCodes(Node tree) {
         mapCodes(tree, "");
