@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 /*
 @Author Brian Nguyen
@@ -22,13 +23,11 @@ public class Main {
 
             File codes = new File("codes.txt");
             OutputStream codeWriter = new FileOutputStream(codes);
-            for (Character c : tree.codes.keySet()) {
-
-            }
+            codeWriter.write(tree.codes.toString().getBytes(StandardCharsets.UTF_8));
 
             File compressed = new File("compressed.txt");
             OutputStream writer = new FileOutputStream(compressed);
-            writer.write(tree.bits);
+//            writer.write(tree.bits);
             writer.close();
             filesize = compressed.length() / 1024;
 

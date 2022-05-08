@@ -4,7 +4,7 @@ import java.util.*;
  */
 public class CodingTree {
     Map<Character, String> codes = new HashMap<>();
-    byte[] bits;
+    List<Byte> bits;
     PriorityQueue<Node> queue;
     Map<Character, Integer> freqMap;
 
@@ -23,19 +23,19 @@ public class CodingTree {
 
         mapCodes(codes, queue.peek());
 
-        BitSet bitset = new BitSet();
-        int x = 0;
-        for (int i = 0; i < message.length(); i++) {
-            Character c = message.charAt(i);
-
-            String codeString = codes.get(c);
-
-            for (int j = 0; j < codeString.length(); j++) {
-                bitset.set(x + j, codeString.charAt(j) != '0');
-            }
-            x += codeString.length();
-        }
-        bits = bitset.toByteArray();
+//        BitSet bitset = new BitSet();
+//        int x = 0;
+//        for (int i = 0; i < message.length(); i++) {
+//            Character c = message.charAt(i);
+//
+//            String codeString = codes.get(c);
+//
+//            for (int j = 0; j < codeString.length(); j++) {
+//                bitset.set(x + j, codeString.charAt(j) != '0');
+//            }
+//            x += codeString.length();
+//        }
+//        bits = bitset.toByteArray();
     }
 
 //    String decode(String bits, Map<Character, String> codes) {
