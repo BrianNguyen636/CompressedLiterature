@@ -9,19 +9,12 @@ public class CodingTree {
     Map<Character, Integer> freqMap;
 
     public CodingTree(String message) {
-        freqMap = new HashMap<>();
-        for (int i = 0; i < message.length(); i++) {
-            Character c = message.charAt(i);
-            if (!freqMap.containsKey(c)) {
-                freqMap.put(c,1);
-            } else {
-                freqMap.put(c, freqMap.get(c) + 1);
-            }
-        }
+        freqMap = frequencyCount(message);
         queue = populateQueue(freqMap);
         mergeTrees(queue);
-
         mapCodes(codes, queue.peek());
+
+
 
 //        BitSet bitset = new BitSet();
 //        int x = 0;
@@ -37,6 +30,7 @@ public class CodingTree {
 //        }
 //        bits = bitset.toByteArray();
     }
+
 
 //    String decode(String bits, Map<Character, String> codes) {
 //        String result = "";
@@ -54,10 +48,10 @@ public class CodingTree {
 //        return result;
 //    }
 
-
     private void mapCodes(Map<Character,String> map, Node tree) {
         mapCodes(map, tree, "");
     }
+
     /*
     Recursive function, if left and right are null, then map code to character.
      */
@@ -73,7 +67,6 @@ public class CodingTree {
             }
         }
     }
-
     private void mergeTrees(PriorityQueue<Node> theQueue) {
         while (theQueue.size() != 1) {
             Node left = theQueue.poll();
@@ -93,14 +86,27 @@ public class CodingTree {
         return result;
     }
 
+    private Map<Character, Integer> frequencyCount(String message) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < message.length(); i++) {
+            Character c = message.charAt(i);
+            if (!map.containsKey(c)) {
+                map.put(c,1);
+            } else {
+                map.put(c, map.get(c) + 1);
+            }
+        }
+        return map;
+    }
     class AscendingComparator implements Comparator<Node>  {
+
         @Override
         public int compare(Node o1, Node o2) {
             return o1.weight - o2.weight;
         }
     }
-
     class Node {
+
         Character character;
         int weight = 0;
         Node left = null;
