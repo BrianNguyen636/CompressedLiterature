@@ -1,36 +1,34 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
 /*
 @Author Brian Nguyen
  */
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
 //        testCodingTree();
         long start = System.currentTimeMillis();
-        File file = new File("WarAndPeace.txt");
-//        File file = new File(args[0]);
-        StringBuilder text = new StringBuilder();
+//        File file = new File("WarAndPeace.txt");
+        File file = new File(args[0]);
+
         long filesize = 0;
         try {
-            Scanner scan = new Scanner(file);
             System.out.println("Reading input");
-            while (scan.hasNextLine()) {
-                text.append(scan.nextLine());
-            }
 
-            CodingTree tree = new CodingTree(text.toString());
+            String text = Files.readString(Path.of(file.getPath()));
+
+            CodingTree tree = new CodingTree(text);
 
             File codes = new File("codes.txt");
             OutputStream codeWriter = new FileOutputStream(codes);
             codeWriter.write(tree.codes.toString().getBytes(StandardCharsets.UTF_8));
 
             File compressed = new File("compressed.txt");
-            OutputStream writer = new FileOutputStream(compressed);
-
             System.out.println("Writing to file");
+
+            OutputStream writer = new FileOutputStream(compressed);
 
             byte[] bit = new byte[tree.bits.size()];
             for (int i = 0; i < tree.bits.size(); i++) {
