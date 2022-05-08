@@ -8,18 +8,20 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        testCodingTree();
+//        testCodingTree();
         long start = System.currentTimeMillis();
         File file = new File("WarAndPeace.txt");
 //        File file = new File(args[0]);
-        String text = "";
+        StringBuilder text = new StringBuilder();
         long filesize = 0;
         try {
             Scanner scan = new Scanner(file);
+            System.out.println("Reading input");
             while (scan.hasNextLine()) {
-                text += scan.nextLine();
+                text.append(scan.nextLine());
             }
-            CodingTree tree = new CodingTree(text);
+
+            CodingTree tree = new CodingTree(text.toString());
 
             File codes = new File("codes.txt");
             OutputStream codeWriter = new FileOutputStream(codes);
@@ -27,10 +29,16 @@ public class Main {
 
             File compressed = new File("compressed.txt");
             OutputStream writer = new FileOutputStream(compressed);
-//            writer.write(tree.bits);
+
+            System.out.println("Writing to file");
+
+            byte[] bit = new byte[tree.bits.size()];
+            for (int i = 0; i < tree.bits.size(); i++) {
+                bit[i] = tree.bits.get(i);
+            }
+            writer.write(bit);
             writer.close();
             filesize = compressed.length() / 1024;
-
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -40,7 +48,7 @@ public class Main {
         long end = System.currentTimeMillis();
         System.out.println("Original file size: " + file.length() / 1024 + " kibibytes.");
         System.out.println("Compressed file size: " + filesize + " kibibytes.");
-        System.out.println("Runtime: " + (end - start) / 1000 + " seconds.");
+        System.out.println("Runtime: " + (end - start) / 1000 + " seconds. (" +(end - start)+" ms)");
 
 
 

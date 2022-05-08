@@ -4,31 +4,55 @@ import java.util.*;
  */
 public class CodingTree {
     Map<Character, String> codes = new HashMap<>();
-    List<Byte> bits;
+    List<Byte> bits = new ArrayList<>();
     PriorityQueue<Node> queue;
     Map<Character, Integer> freqMap;
 
     public CodingTree(String message) {
-        freqMap = frequencyCount(message);
-        queue = populateQueue(freqMap);
-        mergeTrees(queue);
-        mapCodes(codes, queue.peek());
 
+        frequencyCount(message);
 
+        populateQueue();
 
-//        BitSet bitset = new BitSet();
-//        int x = 0;
+        mergeTrees();
+
+        mapCodes(queue.peek());
+
+        System.out.println("Encoding");
+
+//        StringBuilder codeString = new StringBuilder();
 //        for (int i = 0; i < message.length(); i++) {
-//            Character c = message.charAt(i);
-//
-//            String codeString = codes.get(c);
-//
-//            for (int j = 0; j < codeString.length(); j++) {
-//                bitset.set(x + j, codeString.charAt(j) != '0');
+//            codeString.append(codes.get(message.charAt(i)));
+//            if (codeString.length() >= 8) {
+//                String byteString = codeString.substring(0,8);
+//                byte b = (byte) Integer.parseInt(byteString,2);
+//                bits.add(b);
+//                codeString.delete(0,8);
 //            }
-//            x += codeString.length();
 //        }
-//        bits = bitset.toByteArray();
+//        while (codeString.length() != 8) {
+//            codeString.append('0');
+//            byte b = (byte) Integer.parseInt(codeString.toString(),2);
+//            bits.add(b);
+//        }
+
+
+        BitSet bitset = new BitSet();
+        int x = 0;
+        for (int i = 0; i < message.length(); i++) {
+            Character c = message.charAt(i);
+
+            String codeString = codes.get(c);
+
+            for (int j = 0; j < codeString.length(); j++) {
+                bitset.set(x + j, codeString.charAt(j) != '0');
+            }
+            x += codeString.length();
+        }
+        byte[] bitArray = bitset.toByteArray();
+        for (byte b : bitArray) {
+            bits.add(b);
+        }
     }
 
 
@@ -48,55 +72,53 @@ public class CodingTree {
 //        return result;
 //    }
 
-    private void mapCodes(Map<Character,String> map, Node tree) {
-        mapCodes(map, tree, "");
+    private void mapCodes(Node tree) {
+        mapCodes(tree, "");
     }
 
     /*
     Recursive function, if left and right are null, then map code to character.
      */
-    private void mapCodes(Map<Character,String> map, Node current, String code) {
+    private void mapCodes(Node current, String code) {
         if (current.left == null && current.right == null) {
-            map.put(current.character, code);
+            codes.put(current.character, code);
         } else {
             if (current.left != null) {
-                mapCodes(map, current.left, code + "0");
+                mapCodes(current.left, code + "0");
             }
             if (current.right != null) {
-                mapCodes(map, current.right, code + "1");
+                mapCodes(current.right, code + "1");
             }
         }
     }
-    private void mergeTrees(PriorityQueue<Node> theQueue) {
-        while (theQueue.size() != 1) {
-            Node left = theQueue.poll();
-            Node right = theQueue.poll();
+    private void mergeTrees() {
+        while (queue.size() != 1) {
+            Node left = queue.poll();
+            Node right = queue.poll();
             Node root = new Node(left.weight + right.weight);
             root.left = left;
             root.right = right;
-            theQueue.add(root);
+            queue.add(root);
         }
     }
 
-    private PriorityQueue<Node> populateQueue(Map<Character, Integer> freq) {
-        PriorityQueue<Node> result = new PriorityQueue<>(freq.size(), new AscendingComparator());
-        for (Character c : freq.keySet()) {
-            result.add(new Node(c,freq.get(c)));
+    private void populateQueue() {
+        queue = new PriorityQueue<>(freqMap.size(), new AscendingComparator());
+        for (Character c : freqMap.keySet()) {
+            queue.add(new Node(c,freqMap.get(c)));
         }
-        return result;
     }
 
-    private Map<Character, Integer> frequencyCount(String message) {
-        Map<Character, Integer> map = new HashMap<>();
+    private void frequencyCount(String message) {
+        freqMap = new HashMap<>();
         for (int i = 0; i < message.length(); i++) {
             Character c = message.charAt(i);
-            if (!map.containsKey(c)) {
-                map.put(c,1);
+            if (!freqMap.containsKey(c)) {
+                freqMap.put(c, 1);
             } else {
-                map.put(c, map.get(c) + 1);
+                freqMap.put(c, freqMap.get(c) + 1);
             }
         }
-        return map;
     }
     class AscendingComparator implements Comparator<Node>  {
 
@@ -119,7 +141,6 @@ public class CodingTree {
         Node(int theWeight) {
             weight = theWeight;
         }
-        Node(Character theCharacter) {character = theCharacter;}
     }
 }
 
