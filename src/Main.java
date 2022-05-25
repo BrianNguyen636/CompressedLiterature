@@ -16,7 +16,7 @@ public class Main {
         try {
             System.out.println("Reading input");
 
-            //.readallbytes pahts.get
+
             text = new String(Files.readAllBytes(file.toPath()));
 
             CodingTree tree = new CodingTree(text);
