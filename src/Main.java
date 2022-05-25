@@ -1,7 +1,7 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+
 /*
 @Author Brian Nguyen
  */
@@ -11,12 +11,13 @@ public class Main {
 //        testCodingTree();
         long start = System.currentTimeMillis();
         File file = new File(args[0]);
-
+        String text = "";
         long filesize = 0;
         try {
             System.out.println("Reading input");
 
-            String text = Files.readString(Path.of(file.getPath()));
+            //.readallbytes pahts.get
+            text = new String(Files.readAllBytes(file.toPath()));
 
             CodingTree tree = new CodingTree(text);
 
